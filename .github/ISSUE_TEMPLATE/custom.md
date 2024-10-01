@@ -1,9 +1,9 @@
 ---
-name: Custom issue template
-about: Describe this issue template's purpose here.
-title: ''
+name: Issue1
+about: The setup of the python development failed several times.
+title: 'Setup of python env'
 labels: ''
-assignees: ''
+assignees: 'All'
 
 ---
 
