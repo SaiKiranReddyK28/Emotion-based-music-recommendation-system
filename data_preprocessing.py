@@ -12,7 +12,7 @@ os.makedirs(processed_data_dir, exist_ok=True)
 
 # Kaggle dataset details
 # Replace 'username/dataset-name' with the actual Kaggle dataset identifier
-kaggle_dataset = 'username/dataset-name'
+kaggle_dataset = 'msambare/fer2013'
 
 # Download Kaggle dataset
 def download_kaggle_dataset(dataset, save_dir):
