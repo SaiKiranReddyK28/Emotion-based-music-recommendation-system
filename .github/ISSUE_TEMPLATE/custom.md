@@ -97,7 +97,7 @@ name: Model Improvement: CNN Training
 about: 📈 Optimize the CNN model for better accuracy and performance.
 title: '🔄 Model Training and Optimization Issue'
 labels: 'model-training, improvement'
-assignees: 'Vineeth Chintala'
+
 
 ---
 
@@ -111,15 +111,13 @@ Improvements in the CNN model for emotion detection are necessary to achieve hig
 
 ### 📋 Proposed Solution
 - [ ] Implement data augmentation techniques to enhance training data.
-- [ ] Experiment with different CNN architectures (e.g., ResNet, MobileNet).
-- [ ] Use techniques like dropout and early stopping to prevent overfitting.
 
 ---
 name: Integration of Improved Model
 about: 🏗️ Integrate the improved CNN model with the backend API for real-time emotion detection.
 title: '🔧 Backend API & Model Integration Issue'
 labels: 'backend, integration'
-assignees: 'Sai Kiran Reddy K'
+
 
 ---
 
@@ -132,9 +130,8 @@ The improved CNN model needs to be integrated into the backend API to allow real
 - [ ] Validate that the integration is seamless without data loss or latency.
 
 ### 📋 Steps for Integration
-1. **API Deployment**: Deploy the trained model to a Flask endpoint.
-2. **Test with Dummy Data**: Use sample images to verify the response and accuracy.
-3. **Monitor Performance**: Track response time and ensure optimal performance for real-time detection.
+1. **Test with Dummy Data**: Use sample images to verify the response and accuracy.
+
 
 ---
 
