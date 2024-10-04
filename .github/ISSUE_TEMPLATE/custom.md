@@ -46,4 +46,97 @@ The Python files are missing proper test coverage. This issue focuses on integra
 
 ---
 
+name: Integration Issue: Python Tests
+about: ⚠️ Missing tests for proper integration in Python modules.
+title: '🛠️ Missing Python Tests Integration'
+labels: 'tests, integration'
+assignees: 'Mohammed Abrar Baig'
+
+---
+
+## 📝 Description
+Critical Python modules are missing appropriate test coverage, which impacts the robustness of the codebase. This issue focuses on integrating unit and integration tests for existing modules.
+
+### 🔍 Expected Outcome
+- [ ] Integration of comprehensive unit tests for individual functions and modules.
+- [ ] Ensure integration tests cover all critical code paths between modules.
+- [ ] Validate successful execution of all tests without errors.
+
+### 📋 Suggested Solutions
+- [ ] Utilize `pytest` for unit testing and `unittest` for integration testing.
+- [ ] Focus on testing edge cases in emotion detection and backend APIs.
+- [ ] Checklist for tests:
+  - [ ] Validate input data format.
+  - [ ] Test API response times.
+  - [ ] Check error handling for invalid data inputs.
+
+---
+name: Data Collection and Preprocessing Challenges
+about: 🖼️ Issues faced during data collection and preprocessing for model training.
+title: '📊 Data Collection & Preprocessing Issue'
+labels: 'data-collection, preprocessing'
+assignees: 'Joseph Vijay Raj Lokku'
+
+---
+
+## 📝 Description
+Several challenges were encountered while collecting diverse datasets and preprocessing them for training the emotion detection model.
+
+### ❓ Issues Faced
+- [ ] Inconsistent image sizes leading to varying input shapes for the model.
+- [ ] Limited availability of labeled data for certain emotion classes.
+- [ ] Computational overhead during preprocessing, slowing down model training.
+
+### 📋 Steps to Resolve
+1. **Data Normalization**: Implement a resizing function to standardize all image sizes.
+2. **Data Augmentation**: Augment available data to balance classes (e.g., rotation, flipping).
+3. **Preprocessing Pipeline**: Optimize the data preprocessing pipeline for speed (e.g., batch processing).
+
+---
+name: Model Improvement: CNN Training
+about: 📈 Optimize the CNN model for better accuracy and performance.
+title: '🔄 Model Training and Optimization Issue'
+labels: 'model-training, improvement'
+assignees: 'Vineeth Chintala'
+
+---
+
+## 📝 Description
+Improvements in the CNN model for emotion detection are necessary to achieve higher accuracy. This issue focuses on retraining the model, improving hyperparameters, and validating performance.
+
+### 🔍 Challenges Faced
+- [ ] Difficulty in achieving the target accuracy (>90%) due to overfitting.
+- [ ] Longer training times affecting the development cycle.
+- [ ] Balancing accuracy and model size for real-time performance.
+
+### 📋 Proposed Solution
+- [ ] Implement data augmentation techniques to enhance training data.
+- [ ] Experiment with different CNN architectures (e.g., ResNet, MobileNet).
+- [ ] Use techniques like dropout and early stopping to prevent overfitting.
+
+---
+name: Integration of Improved Model
+about: 🏗️ Integrate the improved CNN model with the backend API for real-time emotion detection.
+title: '🔧 Backend API & Model Integration Issue'
+labels: 'backend, integration'
+assignees: 'Sai Kiran Reddy K'
+
+---
+
+## 📝 Description
+The improved CNN model needs to be integrated into the backend API to allow real-time emotion detection. The issue targets successful model deployment and smooth API integration.
+
+### 🔍 Expected Integration Steps
+- [ ] Wrap the trained model within an API endpoint using Flask.
+- [ ] Test the endpoint with different image inputs for accuracy and response time.
+- [ ] Validate that the integration is seamless without data loss or latency.
+
+### 📋 Steps for Integration
+1. **API Deployment**: Deploy the trained model to a Flask endpoint.
+2. **Test with Dummy Data**: Use sample images to verify the response and accuracy.
+3. **Monitor Performance**: Track response time and ensure optimal performance for real-time detection.
+
+---
+
+
 
