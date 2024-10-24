@@ -76,10 +76,11 @@ def optimize_pipeline(list_emotions, emotion_intensity):
         return pd.DataFrame()  # Return an empty dataframe if no results
 
 
-# Function to preprocess the list of emotions to ensure uniqueness
-def pre(list_emotions):
-    unique_list = list(Counter(list_emotions).keys())
-    return unique_list
+# Real-Time Playlist Update Mechanism
+def real_time_playlist_update(list_emotions, emotion_intensity):
+    # Logic to dynamically update the playlist in real-time based on detected emotions
+    updated_playlist = optimize_pipeline(list_emotions, emotion_intensity)
+    return updated_playlist
 
 # CNN Model architecture for emotion detection
 model = Sequential([
