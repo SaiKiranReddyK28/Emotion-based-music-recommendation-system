@@ -26,10 +26,15 @@ df_angry = df[36000:54000]
 df_neutral = df[54000:72000]
 df_happy = df[72000:]
 
-# Function to select songs based on emotions
-def fun(list_emotions):
+# Enhanced Emotion-to-Song Mapping and Dynamic Song Recommendation Based on Emotion Intensity
+def fun(list_emotions, emotion_intensity):
     data = pd.DataFrame()
-    sample_size = [30, 20, 15, 10]  # Sample sizes based on number of detected emotions
+    
+    # Adjust sample size based on emotion intensity
+    if emotion_intensity == 'high':
+        sample_size = [50, 40, 30, 20]
+    else:
+        sample_size = [30, 20, 15, 10]  # Default sample sizes
     
     # Emotion-based filtering for song recommendations
     for idx, emotion in enumerate(list_emotions):
@@ -45,6 +50,30 @@ def fun(list_emotions):
             data = pd.concat([data, df_sad.sample(n=min(sample_size[idx], len(df_sad)))], ignore_index=True)
     
     return data
+
+# Function to preprocess the list of emotions to ensure uniqueness
+def pre(list_emotions):
+    unique_list = list(Counter(list_emotions).keys())
+    return unique_list
+
+# Optimized Pipeline for Recommendation with Error Handling
+def optimize_pipeline(list_emotions, emotion_intensity):
+    results = []
+    if list_emotions:  # Ensure list_emotions is not empty
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = [executor.submit(fun, [emotion], emotion_intensity) for emotion in list_emotions]
+            for future in futures:
+                result = future.result()
+                if not result.empty:  # Check that the result is not empty
+                    results.append(result)
+    else:
+        logging.error("No emotions detected to generate recommendations.")
+    
+    if results:
+        return pd.concat(results)
+    else:
+        logging.error("No valid data to concatenate in the results.")
+        return pd.DataFrame()  # Return an empty dataframe if no results
 
 # Function to preprocess the list of emotions to ensure uniqueness
 def pre(list_emotions):
