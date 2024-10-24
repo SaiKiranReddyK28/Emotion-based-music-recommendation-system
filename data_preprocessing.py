@@ -59,15 +59,13 @@ def pre(list_emotions):
 # Optimized Pipeline for Recommendation with Error Handling
 def optimize_pipeline(list_emotions, emotion_intensity):
     results = []
-    # Optimized multithreading for recommendation generation
-    if list_emotions:
+    if list_emotions:  # Ensure list_emotions is not empty
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = [executor.submit(fun, [emotion], emotion_intensity) for emotion in list_emotions]
             for future in futures:
                 result = future.result()
-                if not result.empty:
+                if not result.empty:  # Check that the result is not empty
                     results.append(result)
-    return pd.concat(results) if results else pd.DataFrame()
     else:
         logging.error("No emotions detected to generate recommendations.")
     
@@ -76,6 +74,7 @@ def optimize_pipeline(list_emotions, emotion_intensity):
     else:
         logging.error("No valid data to concatenate in the results.")
         return pd.DataFrame()  # Return an empty dataframe if no results
+
 
 # Function to preprocess the list of emotions to ensure uniqueness
 def pre(list_emotions):
