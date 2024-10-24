@@ -30,12 +30,6 @@ df_happy = df[72000:]
 def fun(list_emotions, emotion_intensity):
     data = pd.DataFrame()
     
-    # Adjust sample size based on emotion intensity
-    if emotion_intensity == 'high':
-        sample_size = [50, 40, 30, 20]
-    else:
-        sample_size = [30, 20, 15, 10]  # Default sample sizes
-    
     # Emotion-based filtering for song recommendations
     for idx, emotion in enumerate(list_emotions):
         if emotion == 'Neutral':
