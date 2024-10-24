@@ -6,6 +6,11 @@ import pandas as pd
 from collections import Counter
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
+import concurrent.futures
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.ERROR, filename="error_log.log", filemode="a")
 
 # Load dataset and preprocess
 df = pd.read_csv("muse_v3.csv")
@@ -29,14 +34,14 @@ df_happy = df[72000:]
 # Enhanced Emotion-to-Song Mapping and Dynamic Song Recommendation Based on Emotion Intensity
 def fun(list_emotions, emotion_intensity):
     data = pd.DataFrame()
-
-     # Adjust sample size based on emotion intensity
+    
+    # Adjust sample size based on emotion intensity
     if emotion_intensity == 'high':
         sample_size = [50, 40, 30, 20]
     else:
         sample_size = [30, 20, 15, 10]  # Default sample sizes
     
-    # Enchanced Emotion-based filtering for song recommendations
+    # Emotion-based filtering for song recommendations
     for idx, emotion in enumerate(list_emotions):
         if emotion == 'Neutral':
             data = pd.concat([data, df_neutral.sample(n=min(sample_size[idx], len(df_neutral)))], ignore_index=True)
@@ -75,7 +80,6 @@ def optimize_pipeline(list_emotions, emotion_intensity):
         logging.error("No valid data to concatenate in the results.")
         return pd.DataFrame()  # Return an empty dataframe if no results
 
-
 # Real-Time Playlist Update Mechanism
 def real_time_playlist_update(list_emotions, emotion_intensity):
     # Logic to dynamically update the playlist in real-time based on detected emotions
@@ -85,6 +89,7 @@ def real_time_playlist_update(list_emotions, emotion_intensity):
 # CNN Model architecture for emotion detection
 model = Sequential([
     Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(48, 48, 1)),
+    MaxPooling2D(pool_size=(2, 2)),
     Conv2D(64, kernel_size=(3, 3), activation='relu'),
     MaxPooling2D(pool_size=(2, 2)),
     Conv2D(128, kernel_size=(3, 3), activation='relu'),
@@ -98,17 +103,23 @@ model = Sequential([
     Dense(7, activation='softmax')
 ])
 
-# Load pre-trained weights
-model.load_weights('model.h5')
+# Load pre-trained weights without displaying the error on the page
+try:
+    model.load_weights('model.h5')
+except ValueError as e:
+    logging.error(f"Error loading weights: {str(e)}")
 
 # Emotion categories
 emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful", 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
 
 # Streamlit UI Setup
-st.markdown("<h2 style='text-align: center; color: white'><b>Emotion Based Music Recommendation</b></h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; color: black'><b>Emotion Based Music Recommendation</b></h2>", unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
 list_emotions = []
+
+# Initialize recommended_songs with an empty DataFrame
+recommended_songs = pd.DataFrame()
 
 # Real-time emotion detection from webcam
 with col2:
@@ -139,11 +150,20 @@ with col2:
         cap.release()
         cv2.destroyAllWindows()
 
-# Generate song recommendations based on the detected emotions
-recommended_songs = fun(list_emotions)
+# Select emotion intensity
+emotion_intensity = st.selectbox('Select Emotion Intensity', ['normal', 'high'])
+
+# Generate real-time song recommendations based on the detected emotions and selected intensity
+if list_emotions:
+    recommended_songs = real_time_playlist_update(list_emotions, emotion_intensity)
+    if recommended_songs.empty:
+        st.write("No songs available for the detected emotions.")
+else:
+    st.write("No emotions detected. Please try scanning again.")
 
 # Display the recommended songs with clickable links
-st.write("Recommended Songs:")
-for _, row in recommended_songs.iterrows():
-    st.markdown(f"<h4 style='text-align: center;'><a href='{row['link']}'>{row['name']}</a></h4>", unsafe_allow_html=True)
-    st.markdown(f"<h5 style='text-align: center;'><i>{row['artist']}</i></h5>", unsafe_allow_html=True)
+if not recommended_songs.empty:
+    st.write("Recommended Songs:")
+    for _, row in recommended_songs.iterrows():
+        st.markdown(f"<h4 style='text-align: center;'><a href='{row['link']}'>{row['name']}</a></h4>", unsafe_allow_html=True)
+        st.markdown(f"<h5 style='text-align: center;'><i>{row['artist']}</i></h5>", unsafe_allow_html=True)
