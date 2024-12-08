@@ -194,4 +194,4 @@ if not recommended_songs.empty:
         )
 
 # Footer
-st.markdown("<div class='footer'>Powered by 🎵 Group 11</div>", unsafe_allow_html=True)
+st.markdown("<div class='footer'>Powered by 🎵 Group 18</div>", unsafe_allow_html=True)
